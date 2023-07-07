@@ -5,6 +5,7 @@ import os
 from amazon import get_product as get_amazon_product
 from requests import post
 
+
 AMAZON = "https://amazon.ca"
 
 URLS = {
@@ -19,9 +20,9 @@ available_urls = URLS.keys()
 
 
 def load_auth():
-    FILE = os.path.join("Scraper", "auth.json")
-    with open(FILE, "r") as f:
+    with open("auth.json", "r") as f:
         return json.load(f)
+
 
 # place your bright data credentials in auth.json file with keys: "username", "password" and "host"
 cred = load_auth()
@@ -74,7 +75,7 @@ async def get_products(page, search_text, selector, get_product):
 
 def save_results(results):
     data = {"results": results}
-    FILE = os.path.join("Scraper", "results.json")
+    FILE = os.path.join("results.json")
     with open(FILE, "w") as f:
         json.dump(data, f)
 
@@ -86,7 +87,7 @@ def post_results(results, endpoint, search_text, source):
     data = {"data": results, "search_text": search_text, "source": source}
 
     print("Sending request to", endpoint)
-    response = post("http://localhost:5000" + endpoint,
+    response = post("http://api:8393" + endpoint,
                     headers=headers, json=data)
     print("Status code:", response.status_code)
 
@@ -113,6 +114,7 @@ async def main(url, search_text, response_route):
             raise Exception('Invalid URL')
 
         results = await get_products(search_page, search_text, metadata["product_selector"], func)
+        print(results)
         print("Saving results.")
         post_results(results, response_route, search_text, url)
 
@@ -120,4 +122,4 @@ async def main(url, search_text, response_route):
 
 if __name__ == "__main__":
     # test script
-    asyncio.run(main(AMAZON, "ryzen 9 3950x"))
+    asyncio.run(main(AMAZON, "ryzen 9 3950x", "/products/results"))

@@ -1,0 +1,51 @@
+version: "3"
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: price_tracker_api
+    command: sleep infinity
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8393:8393"
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: price_tracker_frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: pricetracker
+      POSTGRES_PASSWORD: example
+    volumes:
+      - price_tracker_db
+    ports:
+      - "5432:5432"
+  scraper:
+    build:
+      context: ./scraper
+      dockerfile: Dockerfile
+    image: price_tracker_scraper
+    command: sleep infinity
+    volumes:
+      - ./scraper:/app
+    ports:
+      - "3001:3001"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    
+volumes:
+  price_tracker_db:

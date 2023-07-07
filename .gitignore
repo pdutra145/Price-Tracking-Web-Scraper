@@ -1,5 +1,5 @@
-auth.json
-database.db
+*.json
+.env
 
 __pycache__
 __pycache__/*
