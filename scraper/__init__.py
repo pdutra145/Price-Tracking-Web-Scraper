@@ -9,11 +9,15 @@ CORS(app)
 
 print(main)
 
+print(f"{__name__} running ... ")
+
 
 # Extract command-line arguments
 @app.route('/start', methods=['POST'])
 def start():
-    data = request.get_json()
+    print('here')
+    print(request.get_data())
+    data = request.get_json(force=True)
     print(data)
 
     url = data.get('url')

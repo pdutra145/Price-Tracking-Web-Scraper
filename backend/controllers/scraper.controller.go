@@ -4,15 +4,15 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 type ScraperArgs struct {
-	Url    string `json:"url"`
-	Search string `json:"search_text"`
+	Url      string `json:"url"`
+	Search   string `json:"search_text"`
+	Endpoint string `json:"endpoint"`
 }
 
 func StartScraper(c *gin.Context) {
@@ -26,12 +26,27 @@ func StartScraper(c *gin.Context) {
 		return
 	}
 
-	resp, err := http.Post("http://scraper:3001/start", "application/json", bytes.NewBuffer(body))
+	defer c.Request.Body.Close()
 
+	fmt.Println(info)
+
+	url := "http://scraper:3001/start" // Replace with the desired URL
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
 	if err != nil {
-		log.Fatalln("Unable to send request to scraper", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create outgoing request", "message": err})
+		return
 	}
 
+	defer req.Body.Close()
+
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send request"})
+		return
+	}
 	defer resp.Body.Close()
 
 	body, err = io.ReadAll(resp.Body)
@@ -40,5 +55,5 @@ func StartScraper(c *gin.Context) {
 		return
 	}
 
-	c.Data(resp.StatusCode, resp.Header.Get("Content-Type"), body)
+	c.JSON(http.StatusOK, gin.H{"response": string(body)})
 }

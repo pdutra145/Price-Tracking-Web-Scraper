@@ -2,12 +2,10 @@ FROM python
 
 WORKDIR /app
 
-COPY requirements.txt .
-
-RUN pip install --no-cache-dir -r requirements.txt
-
 COPY . .
 
-EXPOSE 8080
+RUN /bin/bash -c "source app/bin/activate && pip install -r requirements.txt"
 
-CMD [ "sleep", "infinity" ]
+EXPOSE 3001
+
+CMD [ "app/bin/python3.11", "./__init__.py" ]

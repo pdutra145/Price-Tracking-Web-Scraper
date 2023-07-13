@@ -36,8 +36,6 @@ func init() {
 }
 
 func ConnectDB() *gorm.DB {
-	fmt.Println(db_data.HOST)
-
 	conn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%v",
 		db_data.HOST, db_data.USER, db_data.PASSWORD, db_data.DBNAME, db_data.PORT)
 
@@ -46,8 +44,7 @@ func ConnectDB() *gorm.DB {
 		log.Fatalln("Failed to connect to database", err)
 	}
 
-	db.AutoMigrate(&TrackedProducts{})
-	db.AutoMigrate(&ProductResult{})
+	db.AutoMigrate(&User{}, &ProductResult{}, &TrackedProduct{})
 
 	return db
 
