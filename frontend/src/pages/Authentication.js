@@ -1,16 +1,14 @@
 import React from "react";
-import GoogleButton from "react-google-button";
 import axios from "axios";
 import useOAuth from "../hooks/Auth";
-import GoogleLogin from "react-google-login";
-
+import { LoginSocialGoogle } from "reactjs-social-login";
+import { GoogleLoginButton } from "react-social-login-buttons";
 
 const AuthenticationPage = () => {
-  const { signin} = useOAuth()
+  const { onSuccess, onFailure } = useOAuth()
 
 
   return (
-    <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -24,12 +22,14 @@ const AuthenticationPage = () => {
         </div>
 
         <div className="flex justify-center text-center mt-10">
-          <GoogleLogin 
-            clientId="657485921379-ud1rpfmlutabh0ah0clsfhslg1pdm4sm.apps.googleusercontent.com"
-            onSuccess={signin}
-            onFailure={signin}
-            buttonText="Sign in with Google"
-          />
+          <LoginSocialGoogle
+            client_id={process.env.REACT_APP_GG_APP_ID}
+            onResolve={onSuccess}
+            onReject={onFailure}
+            scope="profile email"
+            >
+            <GoogleLoginButton />
+          </LoginSocialGoogle>
         </div>
 
         <p className="text-center my-10">Or</p>
@@ -99,7 +99,6 @@ const AuthenticationPage = () => {
           </p> */}
         </div>
       </div>
-    </>
   );
 };
 

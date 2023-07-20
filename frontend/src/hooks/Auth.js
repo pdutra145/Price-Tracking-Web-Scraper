@@ -1,31 +1,54 @@
-import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const useOAuth = () => {
-    const navigate = useNavigate()
-    async function signin() {
-        // try {
-            let response = await axios.get("http://localhost:8393/auth/login")
-            console.log(response.data.url)
+  const navigate = useNavigate();
+  const { setIsLoggedIn, setUserInfo } = useContext(AuthContext);
 
-            window.open(response.data.url, "_blank", "noreferrer")
-            
-            response = await axios.get(response.data.url)
+  async function onSuccess({ provider, data }) {
+    console.log(`LOGGED IN SUCCESSFULLY with ${provider}`, data);
 
-            if (response.status === 307) {
-                Cookies.set("google_token", response.data.token)
-                return navigate("/dashboard")
-            }
+    Cookies.set("google_token", data.access_token);
 
-            return navigate("/auth")
-        // } catch (error) {
-        //  console.log(error)   
-        // }
+    setIsLoggedIn(true);
+
+    const user = {
+      picture: data.picture,
+      name: data.name,
+      email: data.email,
+    };
+    setUserInfo(user);
+
+    try {
+      const res = await axios.post("http://localhost:8393/auth/callback", user);
+
+      console.log(res);
+
+      navigate("/dashboard");
+    } catch (error) {
+      console.log("error", error);
+      navigate("/auth");
     }
-    return { signin}
-}
 
-export default useOAuth
+    navigate("/dashboard");
+  }
+
+  function onFailure(res) {
+    setIsLoggedIn(false);
+    console.log("LOGGED IN FAILED", res);
+  }
+
+  function signOut() {
+    console.log("out");
+    Cookies.remove("google_token");
+    setIsLoggedIn(false);
+    setUserInfo({});
+  }
+
+  return { onSuccess, onFailure, signOut };
+};
+
+export default useOAuth;

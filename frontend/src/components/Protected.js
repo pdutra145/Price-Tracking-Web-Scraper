@@ -7,12 +7,8 @@ const ProtectedRoute = (props) => {
   const navigation = useNavigate();
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
-  console.log(isLoggedIn);
-  console.log(Cookies.get("google_token"))
-
-
   useEffect(() => {
-    setIsLoggedIn(Cookies.get("google_token"))
+    setIsLoggedIn(Cookies.get("google_token") != undefined)
 
     console.log(Cookies.get("google_token"))
 
