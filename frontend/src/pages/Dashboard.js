@@ -2,16 +2,19 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import SearchProduct from "../components/Search";
 
+const searchOptions = ["Amazon"];
+
 const Dashboard = () => {
   return (
     <Navbar header="Dashboard">
-      <div className="mx-36">
+      <section id="search-bar" className="mx-36">
         <SearchProduct
           title="Search a Product"
           selectLabel="Provider"
-          options={["Amazon"]}
+          options={searchOptions}
         />
-      </div>
+      </section>
+      <section></section>
     </Navbar>
   );
 };
