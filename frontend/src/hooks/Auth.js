@@ -1,14 +1,17 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/Auth";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { LoadingContext } from "../context/Loading";
 
 const useOAuth = () => {
   const navigate = useNavigate();
   const { setIsLoggedIn, setUserInfo } = useContext(AuthContext);
+  const { setLoading } = useContext(LoadingContext);
 
   async function onSuccess({ provider, data }) {
+    setLoading(true);
     console.log(`LOGGED IN SUCCESSFULLY with ${provider}`, data);
 
     Cookies.set("google_token", data.access_token);
@@ -32,7 +35,7 @@ const useOAuth = () => {
       console.log("error", error);
       navigate("/auth");
     }
-
+    setLoading(false);
     navigate("/dashboard");
   }
 

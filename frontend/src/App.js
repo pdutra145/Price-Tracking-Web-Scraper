@@ -4,6 +4,7 @@ import AuthenticationPage from "./pages/Authentication";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/Protected";
 import AuthProvider from "./context/Auth";
+import LoadingProvider from "./context/Loading";
 
 const router = createBrowserRouter([
   { index: true, path: "/auth", element: <AuthenticationPage /> },
@@ -19,9 +20,11 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <LoadingProvider>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </LoadingProvider>
   );
 };
 
