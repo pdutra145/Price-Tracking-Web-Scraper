@@ -29,6 +29,8 @@ cred = load_auth()
 auth = f'{cred["username"]}:{cred["password"]}'
 browser_url = f'wss://{auth}@{cred["host"]}'
 
+print(browser_url)
+
 
 async def search(metadata, page, search_text):
     print(f"Searching for {search_text} on {page.url}")
@@ -59,17 +61,19 @@ async def get_products(page, search_text, selector, get_product):
         for div in product_divs:
             async def task(p_div):
                 product = await get_product(p_div)
+                print(product)
 
                 if not product["price"] or not product["url"]:
                     return
 
-                for word in words:
-                    if not product["name"] or word.lower() not in product["name"].lower():
-                        break
-                else:
-                    valid_products.append(product)
+                # for word in words:
+                #     if not product["name"] or word.lower() not in product["name"].lower():
+                #         break
+                # else:
+                valid_products.append(product)
             tg.create_task(task(div))
 
+    print(f'Valid Prods are {valid_products}')
     return valid_products
 
 
@@ -80,11 +84,11 @@ def save_results(results):
         json.dump(data, f)
 
 
-def post_results(results, endpoint, search_text, source):
+def post_results(results, endpoint, search_text, source, user_id):
     headers = {
         "Content-Type": "application/json"
     }
-    data = {"data": results, "search_text": search_text, "source": source}
+    data = {"user_id":user_id,"data": results, "search_text": search_text, "source": source}
 
     print("Sending request to", endpoint)
     response = post("http://api:8393" + endpoint,
@@ -92,7 +96,7 @@ def post_results(results, endpoint, search_text, source):
     print("Status code:", response.status_code)
 
 
-async def main(url, search_text, response_route):
+async def main(url, search_text, response_route, user_id):
     metadata = URLS.get(url)
     if not metadata:
         print("Invalid URL.")
@@ -114,9 +118,9 @@ async def main(url, search_text, response_route):
             raise Exception('Invalid URL')
 
         results = await get_products(search_page, search_text, metadata["product_selector"], func)
-        print(results)
+        print(f'Results were {results}')
         print("Saving results.")
-        post_results(results, response_route, search_text, url)
+        post_results(results, response_route, search_text, url, user_id)
 
         await browser.close()
 

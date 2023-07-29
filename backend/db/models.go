@@ -4,8 +4,8 @@ import "gorm.io/gorm"
 
 type ProductResult struct {
 	gorm.Model
-	UserID     int
-	User       User    `gorm:"foreignKey:UserID"`
+	UserID     int     `json:"user_id"`
+	User       User    `gorm:"foreignKey:UserID" json:"user"`
 	Name       string  `json:"name"`
 	URL        string  `json:"url"`
 	Price      float64 `json:"price"`
@@ -24,6 +24,7 @@ type TrackedProduct struct {
 
 type User struct {
 	gorm.Model
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	Name    string `json:"name"`
+	Email   string `json:"email"`
+	Picture string `json:"picture"`
 }

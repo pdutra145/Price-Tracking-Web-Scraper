@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -10,6 +11,7 @@ import (
 )
 
 type ScraperArgs struct {
+	UserID int `json:"user_id"`
 	Url      string `json:"url"`
 	Search   string `json:"search_text"`
 	Endpoint string `json:"endpoint"`
@@ -18,42 +20,38 @@ type ScraperArgs struct {
 func StartScraper(c *gin.Context) {
 	var info ScraperArgs
 
-	c.BindJSON(&info)
-
-	body, err := io.ReadAll(c.Request.Body)
-	if err != nil {
-		fmt.Println("Error reading the request body:", err)
+	if err := c.BindJSON(&info); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Failed to bind input JSON"})
 		return
 	}
 
-	defer c.Request.Body.Close()
+	body, err := json.Marshal(info)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error reading the request body", "message": err.Error()})
+		return
+	}
 
-	fmt.Println(info)
+	fmt.Println(body)
 
 	url := "http://scraper:3001/start" // Replace with the desired URL
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(body))
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create outgoing request", "message": err})
-		return
-	}
-
-	defer req.Body.Close()
-
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send request"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create outgoing request", "message": err.Error()})
 		return
 	}
 	defer resp.Body.Close()
 
-	body, err = io.ReadAll(resp.Body)
+	respBody, err := io.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("Error reading response body:", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error reading response from the scraper", "message": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"response": string(body)})
+	if (resp.StatusCode != 200) {
+		c.JSON(resp.StatusCode, string(respBody))
+		return
+	}
+
+	// Sending the response from the scraper back to the caller of your API
+	c.JSON(resp.StatusCode, gin.H{"response": string(respBody)})
 }

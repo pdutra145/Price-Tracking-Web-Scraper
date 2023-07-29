@@ -2,6 +2,10 @@ FROM python
 
 WORKDIR /app
 
+ARG DEBUG=False
+
+ENV DEBUG=${DEBUG}
+
 COPY . .
 
 RUN /bin/bash -c "source app/bin/activate && pip install -r requirements.txt"

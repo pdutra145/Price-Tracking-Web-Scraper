@@ -2,7 +2,6 @@ package routes
 
 import (
 	"pricetracker/controllers"
-	"pricetracker/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -28,6 +27,7 @@ func Results(router *gin.RouterGroup) {
 
 	results.POST("/", controllers.SubmitProductResults)
 	results.GET("/", controllers.GetProductResults)
+
 }
 
 func Tracked(router *gin.RouterGroup) {
@@ -53,9 +53,7 @@ func Users(app *gin.Engine) *gin.RouterGroup {
 func Auth(app *gin.Engine) *gin.RouterGroup {
 	router := app.Group("/auth")
 
-	router.Use(middleware.AllowOrigins())
-	router.GET("/callback", controllers.GoogleCallbackHandler)
-	router.GET("/login", controllers.GoogleLoginHandler)
+	router.POST("/callback", controllers.GoogleCallbackHandler)
 
 	return router
 }

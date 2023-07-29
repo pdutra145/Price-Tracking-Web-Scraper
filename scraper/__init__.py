@@ -2,12 +2,16 @@ from main import main
 import asyncio
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import logging
+import os
 
+logging.basicConfig(level=logging.DEBUG)
+
+debug = bool(os.environ.get("DEBUG"))
+print(debug)
 
 app = Flask(__name__)
 CORS(app)
-
-print(main)
 
 print(f"{__name__} running ... ")
 
@@ -15,24 +19,26 @@ print(f"{__name__} running ... ")
 # Extract command-line arguments
 @app.route('/start', methods=['POST'])
 def start():
-    print('here')
+    app.logger.info('/start in init.py')
     print(request.get_data())
+    app.logger.info('request.get_data is running')
     data = request.get_json(force=True)
-    print(data)
 
     url = data.get('url')
     search_text = data.get('search_text')
     endpoint = data.get('endpoint')
+    user_id = data.get('user_id')
 
-    print(url, search_text, endpoint)
+    app.logger.info(
+        f"url: {url}, search_text: {search_text}, endpoint: {endpoint}, user_id: {user_id}")
 
     # Run the scraper asynchronously
     async def run():
-        await main(url, search_text, endpoint)
+        await main(url, search_text, endpoint, user_id)
 
     asyncio.run(run())
 
     return jsonify({"message": f"Content succesfully scraped for: {search_text}"}), 200
 
 
-app.run("scraper", 3001)
+app.run("scraper", 3001, debug=debug)

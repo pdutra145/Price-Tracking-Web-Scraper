@@ -1,28 +1,33 @@
 import axios from "axios";
-import { useState, useContext } from "react";
-import { LoadingContext } from "../context/Loading";
+import { useState } from "react";
 
 export default function useProducts() {
-  const prodsURL = `http://localhost:8393/products/results`;
+  const prodsURL = "http://localhost:8393/products/results";
   const [products, setProducts] = useState([]);
-  const { setLoading } = useContext(LoadingContext);
 
   async function fetchProducts() {
-    setLoading(true);
     try {
-      const res = await axios.get(prodsURL, { withCredentials: true });
+      console.log(`Sending request to ${prodsURL}`);
+      const response = await fetch("http://localhost:8393/products/results", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      console.log(res.status);
+      const data = await response.json();
 
-      if (res.status === 404) {
-        console.log(`Error in fetching products ${res.statusText}`);
+      if (response.status === 404) {
+        console.log(`Error in fetching products ${response.statusText}`);
+        return;
       }
 
-      setProducts(res.data.results);
+      console.log(`Response Message: ${data.message}`);
+
+      setProducts(data.results);
     } catch (error) {
       console.log(`Error: ${error}`);
     }
-    setLoading(false);
   }
   return { fetchProducts, products };
 }

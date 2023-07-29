@@ -28,6 +28,7 @@ func GetProductResults(c *gin.Context) {
 
 func SubmitProductResults(c *gin.Context) {
 	var requestData struct {
+		UserID     int              `json:"user_id"`
 		Data       []map[string]any `json:"data"`
 		SearchText string           `json:"search_text"`
 		Source     string           `json:"source"`
@@ -42,6 +43,7 @@ func SubmitProductResults(c *gin.Context) {
 
 	for _, result := range requestData.Data {
 		productResult := db.ProductResult{
+			UserID:     requestData.UserID,
 			Name:       result["name"].(string),
 			URL:        result["url"].(string),
 			Image:      result["img"].(string),

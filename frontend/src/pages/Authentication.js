@@ -91,7 +91,10 @@ const AuthenticationPage = () => {
             </button>
           </div>
         </form>
-        {loading && <CircularProgress />}
+        <div className="flex justify-center align-center text-center">
+          {" "}
+          {loading && <CircularProgress />}
+        </div>
 
         {/* <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{" "}

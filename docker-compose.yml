@@ -5,13 +5,14 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     image: price_tracker_api
-    user: "${UID}:${GID}"
-    command: sleep infinity
+    #    command: go run main.go
     volumes:
       - ./backend:/app
+      - goenvpricetracker:/go
     environment:
-      - UID=${UID}
-      - GID=${GID}
+      - UID=1000
+      - GID=1000
+    #    user: "1000:1000"
     depends_on:
       - db
     ports:
@@ -23,10 +24,11 @@ services:
     image: price_tracker_frontend
     volumes:
       - ./frontend:/app
-    command: sleep infinity
+    #    command: npm start
     depends_on:
       - api
       - scraper
+      - db
     ports:
       - "3000:3000"
   db:
@@ -45,7 +47,9 @@ services:
       context: ./scraper
       dockerfile: Dockerfile
     image: price_tracker_scraper
-    command: sleep infinity
+    #    command: sleep infinity
+    environment:
+      - DEBUG=True
     volumes:
       - ./scraper:/app
     depends_on:
@@ -53,12 +57,13 @@ services:
       - db
     ports:
       - "3001:3001"
-
   adminer:
     image: adminer
     restart: always
     ports:
       - "3002:8080"
+    depends_on:
+      - db
 #  nginx:
 #    image: nginx
 #    restart: always
@@ -67,6 +72,6 @@ services:
 #    ports:
 #      - "8080:80"
 
-
 volumes:
   price_tracker_db:
+  goenvpricetracker:
