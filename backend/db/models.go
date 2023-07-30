@@ -1,9 +1,19 @@
 package db
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+	"time"
+)
+
+type BaseModel struct {
+	ID        uint           `gorm:"primaryKey" json:"id"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"deleted_at,omitempty"`
+}
 
 type ProductResult struct {
-	gorm.Model
+	BaseModel
 	UserID     int     `json:"user_id"`
 	User       User    `gorm:"foreignKey:UserID" json:"user"`
 	Name       string  `json:"name"`
@@ -15,7 +25,7 @@ type ProductResult struct {
 }
 
 type TrackedProduct struct {
-	gorm.Model
+	BaseModel
 	UserID  int
 	User    User   `gorm:"foreignKey:UserID"`
 	Name    string `json:"name"`
@@ -23,7 +33,7 @@ type TrackedProduct struct {
 }
 
 type User struct {
-	gorm.Model
+	BaseModel
 	Name    string `json:"name"`
 	Email   string `json:"email"`
 	Picture string `json:"picture"`

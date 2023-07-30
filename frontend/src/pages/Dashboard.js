@@ -9,10 +9,48 @@ import { DataGrid } from "@mui/x-data-grid";
 const searchOptions = ["Amazon"];
 
 const cols = [
-  { field: "ID", headerName: "ID" },
-  { field: "name", headerName: "Product Name", width: 70 },
-  { field: "price", headerName: "Price (US$)", width: 140 },
-  { field: "search_text", headerName: "Search Text", width: 140 },
+  {
+    field: "id",
+    headerName: "ID",
+    headerClassName: "bg-gray-600 text-white",
+    flex: 0.5,
+    headerAlign: "center",
+  },
+  {
+    field: "name",
+    headerName: "Product Name",
+    headerClassName: "bg-gray-600 text-white",
+    flex: 3,
+    headerAlign: "center",
+  },
+  {
+    field: "price",
+    headerName: "Price (US$)",
+    headerClassName: "bg-gray-600 text-white",
+    flex: 1,
+    headerAlign: "center",
+  },
+  {
+    field: "search_text",
+    headerName: "Search Text",
+    headerClassName: "bg-gray-600 text-white",
+    flex: 1,
+    headerAlign: "center",
+  },
+  {
+    field: "url",
+    headerName: "URL",
+    headerClassName: "bg-gray-600 text-white",
+    flex: 1,
+    headerAlign: "center",
+  },
+  {
+    field: "source",
+    headerName: "Source",
+    headerClassName: "bg-gray-600 text-white",
+    flex: 1,
+    headerAlign: "center",
+  },
 ];
 
 const Dashboard = () => {
@@ -35,6 +73,7 @@ const Dashboard = () => {
         />
       </section>
       <section id="products" className="my-10 text-center">
+        <h1 className="text-start p-5 font-bold">All Products</h1>
         {products.length > 0 ? (
           <DataGrid
             columns={cols}
@@ -45,7 +84,6 @@ const Dashboard = () => {
               },
             }}
             pageSizeOptions={[5, 10]}
-            checkboxSelection
           />
         ) : (
           "Nenhum Produto Encontrado"

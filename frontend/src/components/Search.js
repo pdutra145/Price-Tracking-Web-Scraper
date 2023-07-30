@@ -1,6 +1,15 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
+
+const AMAZON = "https://amazon.ca";
 
 export default function SearchProduct(props) {
+  const [product, setProduct] = useState();
+
+  const formHandler = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <>
       <label
@@ -19,6 +28,8 @@ export default function SearchProduct(props) {
           id="product"
           className="col-span-10 rounded-md border-0 py-1.5 pl-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           placeholder="Type a Product"
+          onChange={(e) => setProduct(e.target.value)}
+          value={product}
         />
         <div className="flex items-center">
           <label htmlFor="provider" className="sr-only">
