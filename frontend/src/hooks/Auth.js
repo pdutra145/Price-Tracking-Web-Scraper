@@ -23,6 +23,11 @@ const useOAuth = () => {
       picture: data.picture,
       name: data.name,
       email: data.email,
+      searchOption: {
+        provider: "Amazon",
+        url: "amazon.com.br",
+        currency: "R$"
+      }
     };
     setUserInfo(user);
 

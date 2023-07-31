@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 export default function useProducts() {
   const prodsURL = "http://localhost:8393/products/results";
@@ -24,10 +24,13 @@ export default function useProducts() {
 
       console.log(`Response Message: ${data.message}`);
 
-      setProducts(data.results);
+      setProducts(data.results)
+      return data.results
     } catch (error) {
       console.log(`Error: ${error}`);
     }
   }
+
+
   return { fetchProducts, products };
 }

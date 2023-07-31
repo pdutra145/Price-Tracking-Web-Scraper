@@ -1,10 +1,12 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from '../context/Auth'
 
 const AMAZON = "https://amazon.ca";
 
 export default function SearchProduct(props) {
   const [product, setProduct] = useState("");
+  const { userInfo } = useContext(AuthContext)
 
   const formHandler = async (e) => {
     e.preventDefault();
@@ -12,10 +14,11 @@ export default function SearchProduct(props) {
     try {
       const bodyData = JSON.stringify({
         search_text: product,
-        url: AMAZON,
+        url: userInfo.searchOption.url,
         endpoint: "/products/results",
-        user_id: 1,
+        user_id: userInfo.id,
       });
+
       const res = await fetch(process.env.REACT_APP_START_SCRAPER_URL, {
         method: "POST",
         headers: {
@@ -53,19 +56,19 @@ export default function SearchProduct(props) {
           type="text"
           name="product"
           id="product"
-          className="col-span-10 rounded-md border-0 py-1.5 pl-7 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          placeholder="Type a Product"
+          className="col-span-9 rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          placeholder="Digíte um Produto"
           onChange={(e) => setProduct(e.target.value)}
           value={product}
         />
-        <div className="flex items-center">
+        <div className="flex items-center col-span-2">
           <label htmlFor="provider" className="sr-only">
             {props.selectLabel}
           </label>
           <select
             id="provider"
             name="provider"
-            className="rounded-md border-0 bg-transparent py-2  text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+            className="rounded-md border-0 bg-transparent py-2 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
           >
             {props.options.map((option, idx) => (
               <option key={idx}>{option}</option>

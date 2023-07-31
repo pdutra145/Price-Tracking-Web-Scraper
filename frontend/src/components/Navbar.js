@@ -7,9 +7,10 @@ import { AuthContext } from "../context/Auth";
 import { useContext } from "react";
 import useOAuth from "../hooks/Auth";
 import UserNavItem from "./UserNavItem";
+import { Link } from "react-router-dom";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
+  { name: "Dashboard", href: "/dashboard", current: true },
   // { name: "Team", href: "#", current: false },
   // { name: "Projects", href: "#", current: false },
   // { name: "Calendar", href: "#", current: false },
@@ -57,9 +58,9 @@ export default function Navbar(props) {
                     <div className="hidden md:block">
                       <div className="ml-10 flex items-baseline space-x-4">
                         {navigation.map((item) => (
-                          <a
+                          <Link
                             key={item.name}
-                            href={item.href}
+                            to={item.href}
                             className={classNames(
                               item.current
                                 ? "bg-gray-900 text-white"
@@ -69,7 +70,7 @@ export default function Navbar(props) {
                             aria-current={item.current ? "page" : undefined}
                           >
                             {item.name}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     </div>
