@@ -4,10 +4,34 @@ import { useState } from "react";
 const AMAZON = "https://amazon.ca";
 
 export default function SearchProduct(props) {
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState("");
 
-  const formHandler = (e) => {
+  const formHandler = async (e) => {
     e.preventDefault();
+
+    try {
+      const bodyData = JSON.stringify({
+        search_text: product,
+        url: AMAZON,
+        endpoint: "/products/results",
+        user_id: 1,
+      });
+      const res = await fetch(process.env.REACT_APP_START_SCRAPER_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: bodyData,
+      });
+
+      console.log(res.status);
+
+      const data = await res.json();
+
+      console.log(data);
+    } catch (error) {
+      console.log(`There was an error in starting the scraper ${error}`);
+    }
   };
 
   return (
@@ -18,7 +42,10 @@ export default function SearchProduct(props) {
       >
         {props.title}
       </label>
-      <form className="grid grid-cols-12 gap-5 mt-2 rounded-md shadow-sm">
+      <form
+        className="grid grid-cols-12 gap-5 mt-2 rounded-md shadow-sm"
+        onSubmit={formHandler}
+      >
         {/* <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
           <span className="text-gray-500 sm:text-sm">$</span>
         </div> */}

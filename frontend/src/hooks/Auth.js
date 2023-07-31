@@ -19,6 +19,7 @@ const useOAuth = () => {
     setIsLoggedIn(true);
 
     const user = {
+      id: data.id,
       picture: data.picture,
       name: data.name,
       email: data.email,
