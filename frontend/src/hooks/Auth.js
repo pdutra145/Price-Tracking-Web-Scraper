@@ -7,7 +7,7 @@ import { LoadingContext } from "../context/Loading";
 
 const useOAuth = () => {
   const navigate = useNavigate();
-  const { setIsLoggedIn, setUserInfo } = useContext(AuthContext);
+  const { setIsLoggedIn, setUserInfo, userInfo } = useContext(AuthContext);
   const { setLoading } = useContext(LoadingContext);
 
   async function onSuccess({ provider, data }) {
@@ -23,26 +23,29 @@ const useOAuth = () => {
       picture: data.picture,
       name: data.name,
       email: data.email,
-      searchOption: {
-        provider: "Amazon",
-        url: "amazon.com.br",
-        currency: "R$"
-      }
+      // searchOption: {
+      //   provider: "Amazon",
+      //   url: "amazon.com.br",
+      //   currency: "R$"
+      // }
     };
-    setUserInfo(user);
 
     try {
       const res = await axios.post("http://localhost:8393/auth/callback", user);
 
-      console.log(res);
+      console.log('Auth Callback Message:', res.data.message);
 
+      console.log({ ...res.data.user })
+
+      setLoading(false);
+      setUserInfo((curr) => ({ ...res.data.user, ...curr, }))
+      console.log(userInfo)
       navigate("/dashboard");
     } catch (error) {
       console.log("error", error);
       navigate("/auth");
     }
-    setLoading(false);
-    navigate("/dashboard");
+
   }
 
   function onFailure(res) {
@@ -55,6 +58,7 @@ const useOAuth = () => {
     Cookies.remove("google_token");
     setIsLoggedIn(false);
     setUserInfo({});
+    navigate('/auth')
   }
 
   return { onSuccess, onFailure, signOut };

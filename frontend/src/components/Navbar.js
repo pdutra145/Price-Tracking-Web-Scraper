@@ -28,7 +28,7 @@ export default function Navbar(props) {
   const userNavigation = [
     { name: "Your Profile", href: "#" },
     { name: "Settings", href: "#" },
-    { name: "Sign out", href: "#", onClick: signOut },
+    { name: "Sign out", href: "/auth", onClick: signOut },
   ];
 
   return (

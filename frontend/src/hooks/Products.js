@@ -23,7 +23,7 @@ export default function useProducts() {
 
       console.log(`Response Message: ${data.message}`);
 
-      setProducts(data.results)
+      setProducts(data.results.length > 0 ? data.results : [])
       return data.results
     } catch (error) {
       console.log(`Error: ${error}`);

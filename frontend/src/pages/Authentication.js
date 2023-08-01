@@ -7,7 +7,7 @@ import { CircularProgress } from "@mui/material";
 
 const AuthenticationPage = () => {
   const { onSuccess, onFailure } = useOAuth();
-  const { loading } = useContext(LoadingContext);
+  const { loading, setLoading } = useContext(LoadingContext);
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -29,7 +29,7 @@ const AuthenticationPage = () => {
           onReject={onFailure}
           scope="profile email"
         >
-          <GoogleLoginButton />
+          <GoogleLoginButton onClick={() => setLoading(true)} />
         </LoginSocialGoogle>
       </div>
 
@@ -91,7 +91,7 @@ const AuthenticationPage = () => {
             </button>
           </div>
         </form>
-        <div className="flex justify-center align-center text-center">
+        <div className="flex justify-center align-center text-center my-5">
           {" "}
           {loading && <CircularProgress />}
         </div>

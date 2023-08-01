@@ -40,10 +40,10 @@ func main() {
 	app.POST("/products/results", controllers.SubmitProductResults)
 	app.GET("/products/results", controllers.GetProductResults)
 
-	app.POST("/products/tracked/add", controllers.AddTrackedProduct)
+	// app.POST("/products/tracked/add", controllers.AddTrackedProduct)
 	app.GET("/products/tracked/:id", controllers.GetTrackedProduct)
 	app.GET("/products/tracked/", controllers.GetTrackedProducts)
-	app.PATCH("/products/tracked/:id", controllers.UpdateTrackedProduct)
+	// app.PATCH("/products/tracked/:id", controllers.UpdateTrackedProduct)
 
 	app.GET("/users", controllers.GetUsers)
 	app.GET("/users/:id", controllers.GetUser)

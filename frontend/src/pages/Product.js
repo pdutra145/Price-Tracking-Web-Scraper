@@ -27,6 +27,11 @@ const ProductInfo = styled('p')({
     textAlign: 'center'
 })
 
+const DashboardLink = styled(Link)({
+    padding: 10,
+    fontSize: 'medium'
+})
+
 const ProductPage = () => {
     const { products } = useProducts()
     const { id } = useParams()
@@ -39,7 +44,7 @@ const ProductPage = () => {
         <Navbar header="Detalhes do Produto">
             {!product && <h1 className='text-center m-10'>Product not found</h1>}
             {product && <section id="product-details">
-                <Link to='/dashboard'><DashboardIcon fontSize={'small'} /> Dashboard</Link>
+                <DashboardLink to='/dashboard'><DashboardIcon /> Dashboard</DashboardLink>
                 <MainGrid container spacing={6} >
                     <Grid item sm={12} lg={6} id="img-div" my={5}> <img src={product.img} alt={product.name} className='rounded-md border-2' /></Grid>
                     <Grid container spacing={4} lg={6} alignItems={"center"} justifyContent={"center"} id="product-div">

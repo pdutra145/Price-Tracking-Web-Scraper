@@ -33,8 +33,8 @@ const Dashboard = () => {
       headerAlign: "center",
     },
     {
-      field: "price",
-      headerName: `Preço (${userInfo.searchOption.currency || 'R$'})`,
+      field: "price_value",
+      headerName: `Preço`,
       headerClassName: "bg-gray-600 text-white",
       flex: 1,
       headerAlign: "center",

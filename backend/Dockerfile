@@ -16,8 +16,6 @@ RUN go mod download
 # Copy the rest of the project files to the working directory
 COPY . .
 
-RUN go install github.com/pilu/fresh
-
 # Build the Go project
 RUN go build -o myapp
 
