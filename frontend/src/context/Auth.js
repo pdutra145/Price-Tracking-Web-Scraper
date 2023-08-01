@@ -2,9 +2,19 @@ import React, { useState } from "react";
 
 export const AuthContext = React.createContext({
   isLoggedIn: false,
-  setIsLoggedIn: () => {},
-  userInfo:{},
-  setUserInfo:() => {}
+  setIsLoggedIn: () => { },
+  userInfo: {
+    id: undefined,
+    picture: undefined,
+    name: undefined,
+    email: undefined,
+    searchOption: {
+      provider: "Amazon",
+      url: "amazon.com.br",
+      currency: "R$"
+    }
+  },
+  setUserInfo: () => { }
 });
 
 const AuthProvider = (props) => {

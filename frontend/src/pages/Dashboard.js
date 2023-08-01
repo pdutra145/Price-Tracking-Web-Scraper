@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useMemo } from "react";
+import React, { useContext, useMemo } from "react";
 import Navbar from "../components/Navbar";
 import SearchProduct from "../components/Search";
 import useProducts from "../hooks/Products";
@@ -11,18 +11,12 @@ import { useNavigate } from "react-router-dom";
 const searchOptions = ["Amazon - BR"];
 
 const Dashboard = () => {
-  const { products, fetchProducts } = useProducts();
+  const { products } = useProducts();
   const { loading, setLoading } = useContext(LoadingContext);
   const { userInfo } = useContext(AuthContext)
   const navigate = useNavigate()
 
-  console.log(userInfo)
-
-  useEffect(() => {
-    fetchProducts()
-  }, [])
-
-  const cols = useMemo(() => [
+  const cols = [
     {
       field: "id",
       headerName: "ID",
@@ -40,7 +34,7 @@ const Dashboard = () => {
     },
     {
       field: "price",
-      headerName: `Preço (${userInfo.searchOption.currency})`,
+      headerName: `Preço (${userInfo.searchOption.currency || 'R$'})`,
       headerClassName: "bg-gray-600 text-white",
       flex: 1,
       headerAlign: "center",
@@ -69,7 +63,7 @@ const Dashboard = () => {
       sortable: false,
       headerAlign: "center",
     },
-  ], [userInfo]);
+  ];
 
   const handleRowClick = (params) => {
     navigate(`/products/${params.id}`)
@@ -88,7 +82,7 @@ const Dashboard = () => {
       </section>
       <section id="products" className="my-10 text-center">
         <h1 className="text-start p-5 font-bold">Produtos Pesquisados</h1>
-        {products.length > 0 ? (
+        {products.length > 0 && !loading ? (
           <DataGrid
             columns={cols}
             rows={products}

@@ -7,6 +7,8 @@
     "@emotion/styled": "^11.11.0",
     "@headlessui/react": "^1.7.15",
     "@heroicons/react": "^2.0.18",
+    "@material-ui/icons": "^4.11.3",
+    "@mui/icons-material": "^5.14.1",
     "@mui/material": "^5.14.2",
     "@mui/x-data-grid": "^6.10.2",
     "@testing-library/jest-dom": "^5.14.1",

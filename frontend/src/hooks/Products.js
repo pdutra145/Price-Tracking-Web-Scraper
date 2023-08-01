@@ -1,5 +1,4 @@
-import axios from "axios";
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 
 export default function useProducts() {
   const prodsURL = "http://localhost:8393/products/results";
@@ -31,6 +30,7 @@ export default function useProducts() {
     }
   }
 
+  useEffect(() => { fetchProducts() }, [])
 
-  return { fetchProducts, products };
+  return { products };
 }
