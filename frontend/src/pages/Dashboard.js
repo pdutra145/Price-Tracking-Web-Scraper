@@ -3,67 +3,65 @@ import Navbar from "../components/Navbar";
 import SearchProduct from "../components/Search";
 import useProducts from "../hooks/Products";
 import { LoadingContext } from "../context/Loading";
-import { AuthContext } from "../context/Auth";
 import { CircularProgress } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
 const searchOptions = ["Amazon - BR"];
 
+const cols = [
+  {
+    field: "id",
+    headerName: "ID",
+    headerClassName: "bg-gray-600 text-white",
+    flex: 0.5,
+    headerAlign: "center",
+  },
+  {
+    field: "name",
+    headerName: "Produto",
+    headerClassName: "bg-gray-600 text-white",
+    flex: 3,
+    sortable: false,
+    headerAlign: "center",
+  },
+  {
+    field: "price_value",
+    headerName: `Preço`,
+    headerClassName: "bg-gray-600 text-white",
+    flex: 1,
+    headerAlign: "center",
+  },
+  {
+    field: "search_text",
+    headerName: "Texto de Pesquisa",
+    headerClassName: "bg-gray-600 text-white",
+    flex: 1,
+    sortable: false,
+    headerAlign: "center",
+  },
+  {
+    field: "url",
+    headerName: "URL",
+    headerClassName: "bg-gray-600 text-white",
+    flex: 1,
+    sortable: false,
+    headerAlign: "center",
+  },
+  {
+    field: "source",
+    headerName: "Origem",
+    headerClassName: "bg-gray-600 text-white",
+    flex: 1,
+    sortable: false,
+    headerAlign: "center",
+  },
+];
+
 const Dashboard = () => {
   const { products } = useProducts();
   const { loading, setLoading } = useContext(LoadingContext);
-  const { userInfo } = useContext(AuthContext)
   const navigate = useNavigate()
-
-  const cols = [
-    {
-      field: "id",
-      headerName: "ID",
-      headerClassName: "bg-gray-600 text-white",
-      flex: 0.5,
-      headerAlign: "center",
-    },
-    {
-      field: "name",
-      headerName: "Produto",
-      headerClassName: "bg-gray-600 text-white",
-      flex: 3,
-      sortable: false,
-      headerAlign: "center",
-    },
-    {
-      field: "price_value",
-      headerName: `Preço`,
-      headerClassName: "bg-gray-600 text-white",
-      flex: 1,
-      headerAlign: "center",
-    },
-    {
-      field: "search_text",
-      headerName: "Texto de Pesquisa",
-      headerClassName: "bg-gray-600 text-white",
-      flex: 1,
-      sortable: false,
-      headerAlign: "center",
-    },
-    {
-      field: "url",
-      headerName: "URL",
-      headerClassName: "bg-gray-600 text-white",
-      flex: 1,
-      sortable: false,
-      headerAlign: "center",
-    },
-    {
-      field: "source",
-      headerName: "Origem",
-      headerClassName: "bg-gray-600 text-white",
-      flex: 1,
-      sortable: false,
-      headerAlign: "center",
-    },
-  ];
 
   const handleRowClick = (params) => {
     navigate(`/products/${params.id}`)
