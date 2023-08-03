@@ -7,8 +7,6 @@ import { CircularProgress } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
 
-const searchOptions = ["Amazon - BR"];
-
 const cols = [
   {
     field: "id",
@@ -19,7 +17,7 @@ const cols = [
   },
   {
     field: "name",
-    headerName: "Produto",
+    headerName: "Product",
     headerClassName: "bg-gray-600 text-white",
     flex: 3,
     sortable: false,
@@ -27,14 +25,14 @@ const cols = [
   },
   {
     field: "price_value",
-    headerName: `Preço`,
+    headerName: `Price`,
     headerClassName: "bg-gray-600 text-white",
     flex: 1,
     headerAlign: "center",
   },
   {
     field: "search_text",
-    headerName: "Texto de Pesquisa",
+    headerName: "Search Text",
     headerClassName: "bg-gray-600 text-white",
     flex: 1,
     sortable: false,
@@ -50,7 +48,7 @@ const cols = [
   },
   {
     field: "source",
-    headerName: "Origem",
+    headerName: "Origin",
     headerClassName: "bg-gray-600 text-white",
     flex: 1,
     sortable: false,
@@ -61,25 +59,20 @@ const cols = [
 const Dashboard = () => {
   const { products } = useProducts();
   const { loading, setLoading } = useContext(LoadingContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleRowClick = (params) => {
-    navigate(`/products/${params.id}`)
-  }
-
+    navigate(`/products/${params.id}`);
+  };
 
   return (
     <Navbar header="Dashboard">
       {loading && <CircularProgress />}
       <section id="search-bar" className="mx-36">
-        <SearchProduct
-          title="Pesquisar Produto"
-          selectLabel="Provider"
-          options={searchOptions}
-        />
+        <SearchProduct title="Search Product" selectLabel="Provider" />
       </section>
       <section id="products" className="my-10 text-center">
-        <h1 className="text-start p-5 font-bold">Produtos Pesquisados</h1>
+        <h1 className="text-start p-5 font-bold">Searched Products</h1>
         {products.length > 0 && !loading ? (
           <DataGrid
             columns={cols}
@@ -93,7 +86,7 @@ const Dashboard = () => {
             pageSizeOptions={[5, 10]}
           />
         ) : (
-          "Nenhum Produto Encontrado"
+          "No Product Results"
         )}
       </section>
     </Navbar>

@@ -10,11 +10,24 @@ const useOAuth = () => {
   const { setIsLoggedIn, setUserInfo, userInfo } = useContext(AuthContext);
   const { setLoading } = useContext(LoadingContext);
 
+  async function checkAccessToken(token) {
+    const id = userInfo.id;
+    try {
+      const res = await axios.get(process.env.REACT_APP_GET_USER_URL + id);
+
+      console.log(res);
+
+      return res.data.user.access_token === token;
+    } catch (error) {
+      throw new Error(`Error when trying to get user ${id}: ${error}`);
+    }
+  }
+
   async function onSuccess({ provider, data }) {
     setLoading(true);
     console.log(`LOGGED IN SUCCESSFULLY with ${provider}`, data);
 
-    Cookies.set("google_token", data.access_token);
+    Cookies.set("access_token", data.access_token);
 
     setIsLoggedIn(true);
 
@@ -23,6 +36,7 @@ const useOAuth = () => {
       picture: data.picture,
       name: data.name,
       email: data.email,
+      access_token: data.access_token,
       // searchOption: {
       //   provider: "Amazon",
       //   url: "amazon.com.br",
@@ -33,19 +47,18 @@ const useOAuth = () => {
     try {
       const res = await axios.post("http://localhost:8393/auth/callback", user);
 
-      console.log('Auth Callback Message:', res.data.message);
+      console.log("Auth Callback Message:", res.data.message);
 
-      console.log({ ...res.data.user })
+      console.log({ ...res.data.user });
 
       setLoading(false);
-      setUserInfo((curr) => ({ ...res.data.user, ...curr, }))
-      console.log(userInfo)
+      setUserInfo((curr) => ({ ...curr, ...res.data.user }));
+      console.log(userInfo);
       navigate("/dashboard");
     } catch (error) {
       console.log("error", error);
       navigate("/auth");
     }
-
   }
 
   function onFailure(res) {
@@ -55,13 +68,13 @@ const useOAuth = () => {
 
   function signOut() {
     console.log("out");
-    Cookies.remove("google_token");
+    Cookies.remove("access_token");
     setIsLoggedIn(false);
     setUserInfo({});
-    navigate('/auth')
+    navigate("/auth");
   }
 
-  return { onSuccess, onFailure, signOut };
+  return { onSuccess, onFailure, signOut, checkAccessToken };
 };
 
 export default useOAuth;

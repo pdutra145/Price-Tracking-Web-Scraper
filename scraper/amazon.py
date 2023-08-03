@@ -36,7 +36,7 @@ async def get_product(product_div):
     # stock = stock_element[0] if len(stock_element) > 0 else None
 
     product_info = {"img": image_url, "name": product_name,
-                    "price_value": product_price, "price_currency": "R$", "url": product_url}
+                    "price_value": product_price, "price_currency": "US$", "url": product_url}
 
     # print(product_info)
 

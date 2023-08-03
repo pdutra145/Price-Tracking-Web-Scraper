@@ -81,7 +81,7 @@ export default function Navbar(props) {
 
           <Grid container sx={{ flexGrow: 1 }} gap={5}>
             <Typography variant="h6" component="div">
-              Perseus
+              Price Tracker
             </Typography>
             <ButtonLink variant="text">
               <Link to="/dashboard">Dashboard</Link>

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"os"
+	// "os"
 	"pricetracker/controllers"
 	"pricetracker/middleware"
 
@@ -52,11 +52,7 @@ func main() {
 
 	app.POST("/auth/callback", controllers.GoogleCallbackHandler)
 
-	port, exists := os.LookupEnv("PORT")
+	// port, exists := os.LookupEnv("PORT")
+	app.Run(fmt.Sprintf(":%s", "8393"))
 
-	if exists {
-		app.Run(fmt.Sprintf(":%s", port))
-	} else {
-		panic("No port")
-	}
 }

@@ -1,33 +1,27 @@
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 
 export const AuthContext = React.createContext({
   isLoggedIn: false,
-  setIsLoggedIn: () => { },
+  setIsLoggedIn: () => {},
   userInfo: {
     id: undefined,
     picture: undefined,
     name: undefined,
     email: undefined,
-    searchOption: {
-      provider: "Amazon",
-      url: "amazon.com.br",
-      currency: "R$"
-    }
   },
-  setUserInfo: () => { }
+  setUserInfo: () => {},
 });
 
 const AuthProvider = (props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    document.cookie.includes("google_token")
-  );
-  const [userInfo, setUserInfo] = useState({})
+  const [isLoggedIn, setIsLoggedIn] = useState(Cookies.get("access_token"));
+  const [userInfo, setUserInfo] = useState({});
 
   const contextObj = {
     userInfo,
     isLoggedIn,
     setIsLoggedIn,
-    setUserInfo
+    setUserInfo,
   };
 
   return (

@@ -10,12 +10,12 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 )
 
-func init() {
-	godotenv.Load(".env")
-}
+// func init() {
+// 	godotenv.Load(".env")
+// }
 
 func getUserData(res *http.Response, c *gin.Context) db.User {
 	defer res.Body.Close()
@@ -48,6 +48,8 @@ func updateUserData(userData db.User) db.User {
 
 	newUser.Name = userData.Name
 	newUser.Email = userData.Email
+	newUser.Picture = userData.Picture
+	newUser.AccessToken = userData.AccessToken
 
 	database.Save(&newUser)
 

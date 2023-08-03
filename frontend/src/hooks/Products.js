@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 
 export default function useProducts() {
-  const prodsURL = "http://localhost:8393/products/results";
   const productOptions = {
     providers: ["Amazon BR", "Mercado Libre", "Amazon US"],
   };
@@ -9,8 +8,8 @@ export default function useProducts() {
 
   async function fetchProducts() {
     try {
-      console.log(`Sending request to ${prodsURL}`);
-      const response = await fetch("http://localhost:8393/products/results", {
+      console.log(`Sending request to ${process.env.REACT_APP_PRODUCTS_URL}`);
+      const response = await fetch(process.env.REACT_APP_PRODUCTS_URL, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

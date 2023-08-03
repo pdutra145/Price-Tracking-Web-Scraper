@@ -36,7 +36,7 @@ func GetUser(c *gin.Context) {
 
 	database.Find(&user, id)
 
-	c.JSON(http.StatusOK, gin.H{"message":user})
+	c.JSON(http.StatusOK, gin.H{"message":"User found","user":user})
 }
 
 func DeleteUser(c *gin.Context) {
@@ -61,5 +61,5 @@ func CreateUser(c *gin.Context) {
 
 	handleError(result.Error, http.StatusInternalServerError, c)
 
-	c.JSON(http.StatusOK, gin.H{"message":user.ID})
+	c.JSON(http.StatusOK, gin.H{"message":fmt.Sprintf("Created user %s", user.ID)})
 }

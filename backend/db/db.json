@@ -1,0 +1,7 @@
+{
+    "HOST": "db",
+    "USER": "postgres",
+    "PASSWORD": "example",
+    "PORT": 5432,
+    "DBNAME": "pricetracker"
+}

@@ -69,15 +69,15 @@ const ProductPage = () => {
               id="product-div"
             >
               <Grid item lg={12}>
-                <Header>Produto:</Header>
+                <Header>Product:</Header>
                 <ProductInfo>{product.name}</ProductInfo>
               </Grid>
               <Grid item lg={12}>
-                <Header>Preço:</Header>
+                <Header>Price:</Header>
                 <ProductInfo>{product.price_value}</ProductInfo>
               </Grid>
               <Grid item lg={12}>
-                <Header>Pesquisado em:</Header>
+                <Header>Search Date:</Header>
                 <ProductInfo>
                   {new Date(product.created_at).toLocaleDateString()}
                 </ProductInfo>
@@ -91,7 +91,7 @@ const ProductPage = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Ver Produto
+                  See Product
                 </a>
               </Button>
             </Grid>

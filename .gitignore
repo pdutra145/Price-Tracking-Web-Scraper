@@ -1,6 +1,8 @@
 *.json
-.env
+!db.json
+!auth_example.json
 
+.env
 __pycache__
 __pycache__/*
 tmp/

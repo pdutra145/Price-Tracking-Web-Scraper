@@ -19,9 +19,9 @@ export default function useSettings() {
     currencies: ["R$", "US$", "EUR"],
   };
   const [settings, dispatch] = useReducer(settingsReducer, {
-    provider: "Amazon BR",
-    url: "amazon.com.br",
-    currency: "R$",
+    provider: "Amazon US",
+    url: "amazon.ca",
+    currency: "US$",
   });
 
   return { settings, dispatch, options };
