@@ -1,18 +1,30 @@
-import React from "react";
-import { Grid, Typography } from "@mui/material";
+import { useState } from "react";
+import { Divider, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import DashboardIcon from '@mui/icons-material/Dashboard';
-
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import SettingsOption from "../components/settings/Option";
+import useSettings from "../hooks/Settings";
 
 const SettingsPage = () => {
-    return (
-        <Grid container lg={12} justifyContent={"center"} my={10}>
-            <Typography variant="span" ><Link to={"/dashboard"}><DashboardIcon /> Dashboard</Link></Typography>
-            <Typography variant="h2" component={"h1"} textAlign={"center"} m={5}>
-                Settings Page
-            </Typography>
+  const { options } = useSettings();
+  return (
+    <Grid container lg={12} justifyContent={"center"} my={10}>
+      <Typography variant="p">
+        <Link to={"/dashboard"}>
+          <DashboardIcon /> Dashboard
+        </Link>
+      </Typography>
+      <Grid container lg={8} justifyContent={"center"} alignItems={"center"}>
+        <Typography variant="h4" component={"h1"}>
+          Settings
+        </Typography>
+        <Grid container direction={"column"} my={5}>
+          <SettingsOption options={options} />
+          <Divider />
         </Grid>
-    );
+      </Grid>
+    </Grid>
+  );
 };
 
 export default SettingsPage;

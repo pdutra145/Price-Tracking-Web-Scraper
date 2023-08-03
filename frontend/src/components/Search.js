@@ -1,12 +1,14 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useContext, useState } from "react";
-import { AuthContext } from '../context/Auth'
+import { AuthContext } from "../context/Auth";
+import useProducts from "../hooks/Products";
 
 const AMAZON = "https://amazon.ca";
 
 export default function SearchProduct(props) {
   const [product, setProduct] = useState("");
-  const { userInfo } = useContext(AuthContext)
+  const { userInfo } = useContext(AuthContext);
+  const { productOptions } = useProducts();
 
   const formHandler = async (e) => {
     e.preventDefault();
@@ -14,9 +16,9 @@ export default function SearchProduct(props) {
     try {
       const bodyData = JSON.stringify({
         search_text: product,
-        url: userInfo.searchOption.url,
+        url: AMAZON,
         endpoint: "/products/results",
-        user_id: userInfo.id,
+        user_id: userInfo.id || 1,
       });
 
       const res = await fetch(process.env.REACT_APP_START_SCRAPER_URL, {
@@ -70,7 +72,7 @@ export default function SearchProduct(props) {
             name="provider"
             className="rounded-md border-0 bg-transparent py-2 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
           >
-            {props.options.map((option, idx) => (
+            {productOptions.providers.map((option, idx) => (
               <option key={idx}>{option}</option>
             ))}
           </select>

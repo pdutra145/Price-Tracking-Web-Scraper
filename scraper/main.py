@@ -63,7 +63,7 @@ async def get_products(page, search_text, selector, get_product):
                 product = await get_product(p_div)
                 print(product)
 
-                if not product["price"] or not product["url"]:
+                if not product["price_value"] or not product["url"]:
                     return
 
                 # for word in words:

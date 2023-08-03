@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 
 export default function useProducts() {
   const prodsURL = "http://localhost:8393/products/results";
+  const productOptions = {
+    providers: ["Amazon BR", "Mercado Libre", "Amazon US"],
+  };
   const [products, setProducts] = useState([]);
 
   async function fetchProducts() {
@@ -23,14 +26,16 @@ export default function useProducts() {
 
       console.log(`Response Message: ${data.message}`);
 
-      setProducts(data.results.length > 0 ? data.results : [])
-      return data.results
+      setProducts(data.results.length > 0 ? data.results : []);
+      return data.results;
     } catch (error) {
       console.log(`Error: ${error}`);
     }
   }
 
-  useEffect(() => { fetchProducts() }, [])
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
-  return { products };
+  return { products, productOptions };
 }
