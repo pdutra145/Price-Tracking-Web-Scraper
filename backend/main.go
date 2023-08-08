@@ -50,7 +50,9 @@ func main() {
 	app.DELETE("/users/:id", controllers.DeleteUser)
 	app.POST("/users/create", controllers.CreateUser)
 
-	app.POST("/auth/callback", controllers.GoogleCallbackHandler)
+	app.POST("/auth/google/callback", controllers.GoogleCallbackHandler)
+	app.POST("/auth/callback", controllers.CallbackHandler)
+
 
 	// port, exists := os.LookupEnv("PORT")
 	app.Run(fmt.Sprintf(":%s", "8393"))

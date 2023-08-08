@@ -23,7 +23,42 @@ const useOAuth = () => {
     }
   }
 
-  async function onSuccess({ provider, data }) {
+  async function onSuccess(e, data) {
+    e.preventDefault();
+    setLoading(true);
+    console.log(`LOGGED IN SUCCESSFULLY `, data);
+
+    Cookies.set("access_token", data.access_token);
+
+    setIsLoggedIn(true);
+
+    const user = {
+      id: data.id,
+      picture: data.picture,
+      name: data.name,
+      email: data.email,
+      access_token: data.access_token,
+      auth_provider: data.provider,
+    };
+
+    try {
+      const res = await axios.post(process.env.REACT_APP_AUTH_CALLBACK, user);
+
+      console.log("Auth Callback Message:", res.data.message);
+
+      console.log({ ...res.data.user });
+
+      setLoading(false);
+      setUserInfo((curr) => ({ ...curr, ...res.data.user }));
+      console.log(userInfo);
+      navigate("/dashboard");
+    } catch (error) {
+      console.log("error", error);
+      navigate("/auth");
+    }
+  }
+
+  async function onSuccessGoogle({ provider, data }) {
     setLoading(true);
     console.log(`LOGGED IN SUCCESSFULLY with ${provider}`, data);
 
@@ -37,15 +72,14 @@ const useOAuth = () => {
       name: data.name,
       email: data.email,
       access_token: data.access_token,
-      // searchOption: {
-      //   provider: "Amazon",
-      //   url: "amazon.com.br",
-      //   currency: "R$"
-      // }
+      auth_provider: data.provider,
     };
 
     try {
-      const res = await axios.post("http://localhost:8393/auth/callback", user);
+      const res = await axios.post(
+        process.env.REACT_APP_GOOGLE_AUTH_CALLBACK,
+        user
+      );
 
       console.log("Auth Callback Message:", res.data.message);
 
@@ -74,7 +108,7 @@ const useOAuth = () => {
     navigate("/auth");
   }
 
-  return { onSuccess, onFailure, signOut, checkAccessToken };
+  return { onSuccessGoogle, onSuccess, onFailure, signOut, checkAccessToken };
 };
 
 export default useOAuth;

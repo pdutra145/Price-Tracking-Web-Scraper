@@ -1,3 +1,5 @@
 playwright
 flask
 flask_cors
+emails
+beautifulsoup4

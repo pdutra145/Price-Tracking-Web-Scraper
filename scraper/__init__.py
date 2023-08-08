@@ -1,4 +1,5 @@
 from main import main
+from email_sender.send_email import send_email
 import asyncio
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -20,8 +21,6 @@ print(f"{__name__} running ... ")
 @app.route('/start', methods=['POST'])
 def start():
     app.logger.info('/start in init.py')
-    print(request.get_data())
-    app.logger.info('request.get_data is running')
     data = request.get_json(force=True)
 
     url = data.get('url')
@@ -39,6 +38,21 @@ def start():
     asyncio.run(run())
 
     return jsonify({"message": f"Content succesfully scraped for: {search_text}"}), 200
+
+
+@app.route('/send_email', methods=['POST'])
+def email():
+    app.logger.info('/send_email in init.py')
+    
+    data = request.get_json(force=True)
+    sender = data.get('sender')
+    to = data.get('to')
+    subject = data.get('subject')
+    content = data.get('content')
+
+    status = send_email(sender, to,
+                        subject, content)
+    return jsonify({"message": f"Email successfully sent!"}), status
 
 
 app.run("scraper", 3001, debug=debug)

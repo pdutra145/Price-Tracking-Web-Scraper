@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email</title>
+  <style>
+    h1 {
+      color: #ffffff;
+      font-family: 'Lato', sans-serif;
+      font-size: 54px;
+      font-weight: 300;
+      line-height: 58px;
+      margin: 0 0 58px;
+    }
+
+
+    p {
+      color: #cbd4da;
+      font-family: 'Lucida Sans', Arial, sans-serif;
+      font-size: 16px;
+      line-height: 26px;
+      text-indent: 30px;
+      margin: 0;
+    }
+
+
+    a {
+      color: #fe921f;
+      text-decoration: underline;
+    }
+
+
+    a:hover {
+      color: #ffffff
+    }
+
+    .main-div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #55585c;
+      padding: 25px;
+    }
+
+
+    .date {
+      background: #fe921f;
+      color: #ffffff;
+      display: inline-block;
+      font-family: 'Lato', sans-serif;
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 12px;
+      letter-spacing: 1px;
+      margin: 0 0 30px;
+      padding: 10px 15px 8px;
+      text-transform: uppercase;
+      align-self: flex-start;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-div">
+    <div class="date">
+      {date}
+    </div>
+    <h1>{h1}</h1>
+    <p>{p}</p>
+  </div>
+</body>
+
+</html>

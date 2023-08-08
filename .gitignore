@@ -5,6 +5,6 @@
 .env
 __pycache__
 __pycache__/*
-tmp/
+tmp
 pricetracker
 node_modules/
