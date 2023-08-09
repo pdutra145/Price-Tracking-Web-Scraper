@@ -51,8 +51,8 @@ func main() {
 	app.POST("/users/create", controllers.CreateUser)
 
 	app.POST("/auth/google/callback", controllers.GoogleCallbackHandler)
-	app.POST("/auth/callback", controllers.CallbackHandler)
-
+	app.POST("/auth/signup", controllers.CreateUserHandler)
+	app.POST("/auth/login", controllers.LoginHandler)
 
 	// port, exists := os.LookupEnv("PORT")
 	app.Run(fmt.Sprintf(":%s", "8393"))

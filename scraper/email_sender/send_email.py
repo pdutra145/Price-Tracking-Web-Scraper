@@ -30,7 +30,7 @@ def send_email(sender, to, subject, content):
     )
 
     r = message.send(
-        to=to,  # replace with recipient email
+        to=to["email"],  # replace with recipient email
         smtp={'host': cred["HOST"], 'port': cred["PORT"],
               # replace with your Mailtrap's username
               'user': cred["USERNAME"],
@@ -38,7 +38,7 @@ def send_email(sender, to, subject, content):
               'password': cred["PASSWORD"],
               'tls': True})
 
-    return r.status_code
+    return 200
 
 
 if __name__ == '__main__':

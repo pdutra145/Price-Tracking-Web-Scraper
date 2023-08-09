@@ -38,8 +38,10 @@ type TrackedProduct struct {
 
 type User struct {
 	BaseModel
+	Username string `json:"username"`
 	Name    string `json:"name"`
 	Email   string `json:"email"`
+	Password string `json:"password"`
 	Picture string `json:"picture"`
 	AuthProvider string `json:"auth_provider"`
 	AccessToken string `json:"access_token"`

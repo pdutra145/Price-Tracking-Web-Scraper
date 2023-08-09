@@ -10,6 +10,7 @@ export const AuthContext = React.createContext({
     name: undefined,
     email: undefined,
     auth_provider: undefined,
+    email_confirmed: undefined,
   },
   setUserInfo: () => {},
 });

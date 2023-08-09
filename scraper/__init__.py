@@ -45,6 +45,8 @@ def email():
     app.logger.info('/send_email in init.py')
     
     data = request.get_json(force=True)
+    app.logger.debug(data)
+
     sender = data.get('sender')
     to = data.get('to')
     subject = data.get('subject')

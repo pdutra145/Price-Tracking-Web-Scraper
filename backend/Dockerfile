@@ -17,10 +17,13 @@ RUN go mod download
 COPY . .
 
 # Build the Go project
-RUN go build -o myapp
+# RUN go build -o myapp
 
 # Expose the port that your Go application listens on
 EXPOSE 8393
 
+# Copy the entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+
 # Set the command to run your Go application
-CMD ["fresh"]
+ENTRYPOINT [ "/entrypoint.sh" ]

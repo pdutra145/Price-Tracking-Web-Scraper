@@ -23,30 +23,26 @@ const useOAuth = () => {
     }
   }
 
-  async function onSuccess(e, data) {
+  async function onAuth(e, data, url) {
     e.preventDefault();
     setLoading(true);
-    console.log(`LOGGED IN SUCCESSFULLY `, data);
-
-    Cookies.set("access_token", data.access_token);
 
     setIsLoggedIn(true);
 
-    const user = {
-      id: data.id,
-      picture: data.picture,
-      name: data.name,
+    const userData = {
+      name: data.name || "",
       email: data.email,
-      access_token: data.access_token,
-      auth_provider: data.provider,
+      password: data.password,
     };
 
     try {
-      const res = await axios.post(process.env.REACT_APP_AUTH_CALLBACK, user);
+      const res = await axios.post(url, userData);
 
       console.log("Auth Callback Message:", res.data.message);
 
       console.log({ ...res.data.user });
+
+      Cookies.set("access_token", res.data.user.access_token);
 
       setLoading(false);
       setUserInfo((curr) => ({ ...curr, ...res.data.user }));
@@ -72,8 +68,11 @@ const useOAuth = () => {
       name: data.name,
       email: data.email,
       access_token: data.access_token,
-      auth_provider: data.provider,
+      auth_provider: provider,
+      email_confirmed: data.email_verified,
     };
+
+    console.log(user);
 
     try {
       const res = await axios.post(
@@ -83,11 +82,8 @@ const useOAuth = () => {
 
       console.log("Auth Callback Message:", res.data.message);
 
-      console.log({ ...res.data.user });
-
       setLoading(false);
       setUserInfo((curr) => ({ ...curr, ...res.data.user }));
-      console.log(userInfo);
       navigate("/dashboard");
     } catch (error) {
       console.log("error", error);
@@ -108,7 +104,7 @@ const useOAuth = () => {
     navigate("/auth");
   }
 
-  return { onSuccessGoogle, onSuccess, onFailure, signOut, checkAccessToken };
+  return { onSuccessGoogle, onAuth, onFailure, signOut, checkAccessToken };
 };
 
 export default useOAuth;

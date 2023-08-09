@@ -61,5 +61,5 @@ func CreateUser(c *gin.Context) {
 
 	handleError(result.Error, http.StatusInternalServerError, c)
 
-	c.JSON(http.StatusOK, gin.H{"message":fmt.Sprintf("Created user %s", user.ID)})
+	c.JSON(http.StatusOK, gin.H{"message":fmt.Sprintf("Created user %d", user.ID)})
 }

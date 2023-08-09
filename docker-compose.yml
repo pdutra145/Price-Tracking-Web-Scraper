@@ -10,9 +10,8 @@ services:
       - ./backend:/app
       - goenvpricetracker:/go
     environment:
-      - UID=1000
-      - GID=1000
-    #    user: "1000:1000"
+      - DEBUG=False
+    user: "${UID}:${GID}"
     depends_on:
       - db
     ports:
@@ -52,6 +51,7 @@ services:
       - DEBUG=True
     volumes:
       - ./scraper:/app
+    user: "1000:1000"
     depends_on:
       - api
       - db

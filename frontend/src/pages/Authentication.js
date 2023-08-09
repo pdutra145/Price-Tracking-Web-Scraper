@@ -4,10 +4,10 @@ import { LoginSocialGoogle } from "reactjs-social-login";
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { LoadingContext } from "../context/Loading";
 import { CircularProgress } from "@mui/material";
-import LoginForm from "../components/Form/LoginForm";
+import AuthForm from "../components/Form/AuthForm";
 
 const AuthenticationPage = () => {
-  const { onSuccess, onSuccessGoogle, onFailure } = useOAuth();
+  const { onSuccessGoogle, onFailure } = useOAuth();
   const { loading, setLoading } = useContext(LoadingContext);
 
   return (
@@ -35,7 +35,7 @@ const AuthenticationPage = () => {
       </div>
 
       <p className="text-center my-10">Or</p>
-      <LoginForm />
+      <AuthForm />
       <div className="flex justify-center align-center text-center my-5">
         {" "}
         {loading && <CircularProgress />}
