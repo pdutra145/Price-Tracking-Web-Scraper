@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Divider, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -8,14 +7,14 @@ import useSettings from "../hooks/Settings";
 const SettingsPage = () => {
   const { options } = useSettings();
   return (
-    <Grid container lg={12} justifyContent={"center"} my={10}>
+    <Grid container justifyContent={"center"} my={10}>
       <Typography variant="p">
         <Link to={"/dashboard"}>
           <DashboardIcon /> Dashboard
         </Link>
       </Typography>
-      <Grid container lg={8} justifyContent={"center"} alignItems={"center"}>
-        <Typography variant="h4" component={"h1"}>
+      <Grid item lg={8} justifyContent={"center"} alignItems={"center"}>
+        <Typography variant="h4" component={"h1"} textAlign={"center"}>
           Settings
         </Typography>
         <Grid container direction={"column"} my={5}>

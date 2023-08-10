@@ -10,7 +10,9 @@ services:
       - ./backend:/app
       - goenvpricetracker:/go
     environment:
-      - DEBUG=False
+      - DEBUG=True
+      - UID=${UID}
+      - GID=${GID}
     user: "${UID}:${GID}"
     depends_on:
       - db

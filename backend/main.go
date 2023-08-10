@@ -4,6 +4,7 @@ import (
 	"fmt"
 	// "os"
 	"pricetracker/controllers"
+	auth "pricetracker/controllers/auth"
 	"pricetracker/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -23,15 +24,7 @@ func main() {
 
 	app := gin.Default()
 
-	// Configuring CORS middleware to allow requests from your React app's domain and port
-
-	// Configure CORS middleware
-	// config := cors.DefaultConfig()
-	// config.AllowAllOrigins = true
-	// config.AllowMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"}
-	// config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "Authorization"}
-
-	// app.Use(cors.New(config))
+	app.LoadHTMLGlob("templates/*")
 
 	app.Use(middleware.CORSMiddleware())
 
@@ -50,9 +43,11 @@ func main() {
 	app.DELETE("/users/:id", controllers.DeleteUser)
 	app.POST("/users/create", controllers.CreateUser)
 
-	app.POST("/auth/google/callback", controllers.GoogleCallbackHandler)
-	app.POST("/auth/signup", controllers.CreateUserHandler)
-	app.POST("/auth/login", controllers.LoginHandler)
+	app.POST("/auth/google/callback", auth.GoogleCallbackHandler)
+	app.POST("/auth/signup", auth.CreateUserHandler)
+	app.POST("/auth/login", auth.LoginHandler)
+
+	app.GET("/users/auth/email/:token", auth.EmailConfirmation)
 
 	// port, exists := os.LookupEnv("PORT")
 	app.Run(fmt.Sprintf(":%s", "8393"))

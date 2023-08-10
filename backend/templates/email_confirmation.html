@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmation</title>
+    <style>
+        .main-div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #d2d9e2;
+            padding: 25px;
+        }
+
+        h1 {
+            color: #0e196b;
+            font-family: 'Lato', sans-serif;
+            font-size: 54px;
+            font-weight: 300;
+            line-height: 58px;
+            margin: 0 0 58px;
+        }
+
+
+        p {
+            color: #000000;
+            font-family: 'Lucida Sans', Arial, sans-serif;
+            font-size: 16px;
+            line-height: 26px;
+            text-indent: 30px;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-div">
+        <h1>Your Email was confirmed</h1>
+        <p>You can now close this tab {{.name}}!</p>
+    </div>
+</body>
+
+</html>

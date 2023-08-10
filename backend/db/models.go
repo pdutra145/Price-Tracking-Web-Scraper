@@ -45,5 +45,6 @@ type User struct {
 	Picture string `json:"picture"`
 	AuthProvider string `json:"auth_provider"`
 	AccessToken string `json:"access_token"`
+	EmailToken string `json:"email_token"`
 	EmailConfirmed bool `json:"email_confirmed" gorm:"default:false"`
 }

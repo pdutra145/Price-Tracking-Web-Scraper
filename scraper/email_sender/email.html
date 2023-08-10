@@ -7,7 +7,7 @@
   <title>Email</title>
   <style>
     h1 {
-      color: #ffffff;
+      color: #0e196b;
       font-family: 'Lato', sans-serif;
       font-size: 54px;
       font-weight: 300;
@@ -17,7 +17,7 @@
 
 
     p {
-      color: #cbd4da;
+      color: #000000;
       font-family: 'Lucida Sans', Arial, sans-serif;
       font-size: 16px;
       line-height: 26px;
@@ -27,13 +27,13 @@
 
 
     a {
-      color: #fe921f;
+      color: #0c3067;
       text-decoration: underline;
     }
 
 
     a:hover {
-      color: #ffffff
+      color: #0c3067
     }
 
     .main-div {
@@ -41,13 +41,13 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: #55585c;
+      background-color: #d2d9e2;
       padding: 25px;
     }
 
 
     .date {
-      background: #fe921f;
+      background: #102d7c;
       color: #ffffff;
       display: inline-block;
       font-family: 'Lato', sans-serif;
@@ -60,6 +60,24 @@
       text-transform: uppercase;
       align-self: flex-start;
     }
+
+    .button {
+      transition: all .1s;
+      background-color: #102d7c;
+      color: #d2d9e2;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: .75rem;
+      margin: 1.25rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      box-shadow: 10px 10px 2px 1px rgba(black, .2);
+    }
+
+    .button:hover {
+      background-color: #0e196b;
+      transform: scale(1.05);
+    }
   </style>
 </head>
 
@@ -69,7 +87,10 @@
       {date}
     </div>
     <h1>{h1}</h1>
-    <p>{p}</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex incidunt ea obcaecati perferendis labore dolor
+      voluptates quibusdam tempora itaque, eum excepturi, in atque ipsum nisi repellendus quidem quia beatae.
+      Consequuntur?</p>
+    <button class="button">Confirm</button>
   </div>
 </body>
 

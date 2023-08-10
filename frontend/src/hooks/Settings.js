@@ -1,10 +1,12 @@
 import { useReducer } from "react";
 
 const settingsReducer = (state, action) => {
+  console.log(action.type);
   switch (action.type) {
     case "set_currency":
       return { ...state, currency: action.payload };
     case "set_provider":
+      console.log("in set_provider", action.payload);
       return { ...state, provider: action.payload };
     case "set_url":
       return { ...state, url: action.payload };

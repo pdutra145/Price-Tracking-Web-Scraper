@@ -2,7 +2,6 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth";
 import useProducts from "../hooks/Products";
-import useSettings from "../hooks/Settings";
 
 const AMAZON = "https://amazon.ca";
 
@@ -10,7 +9,6 @@ export default function SearchProduct(props) {
   const [product, setProduct] = useState("");
   const { userInfo } = useContext(AuthContext);
   const { productOptions } = useProducts();
-  const { settings } = useSettings();
 
   const formHandler = async (e) => {
     e.preventDefault();
@@ -73,7 +71,7 @@ export default function SearchProduct(props) {
             id="provider"
             name="provider"
             className="rounded-md border-0 bg-transparent py-2 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
-            defaultValue={settings.provider}
+            defaultValue={localStorage.getItem("provider")}
           >
             {productOptions.providers.map((option, idx) => (
               <option key={idx}>{option}</option>
