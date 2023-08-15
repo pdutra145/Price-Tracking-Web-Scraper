@@ -32,9 +32,9 @@ export default function useProducts() {
     }
   }
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  // useEffect(() => {
+  //   fetchProducts();
+  // }, []);
 
-  return { products, productOptions };
+  return { products, setProducts, productOptions };
 }

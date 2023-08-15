@@ -126,4 +126,4 @@ async def main(url, search_text, response_route, user_id):
 
 if __name__ == "__main__":
     # test script
-    asyncio.run(main(AMAZON, "ryzen 9 3950x", "/products/results"))
+    asyncio.run(main(AMAZON, "ryzen 9 3950x", "/products/results", 9))

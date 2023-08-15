@@ -3,6 +3,8 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import useOAuth from "../hooks/Auth";
+import { Outlet } from "react-router-dom";
+import { Grid } from "@mui/material";
 
 const ProtectedRoute = (props) => {
   const navigation = useNavigate();
@@ -17,7 +19,11 @@ const ProtectedRoute = (props) => {
     }
   }, []);
 
-  return props.children;
+  return (
+    <Grid container spacing={2} justifyContent={"center"} alignItems={"center"}>
+      <Outlet />
+    </Grid>
+  );
 };
 
 export default ProtectedRoute;

@@ -12,6 +12,16 @@ import (
 
 var database = db.ConnectDB()
 
+func GetProductResult(c *gin.Context) {
+	var product db.ProductResult
+
+	prodId,_:= c.Params.Get("id")
+
+	database.Where("id = ?", prodId).Find(&product).Order("created_at DESC")
+
+	c.JSON(http.StatusOK, gin.H{"message": fmt.Sprintf("Found Product results for %s", prodId), "product": product})
+}
+
 func GetProductResults(c *gin.Context) {
 	var results []db.ProductResult
 

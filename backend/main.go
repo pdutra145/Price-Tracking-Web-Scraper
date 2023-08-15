@@ -32,6 +32,8 @@ func main() {
 
 	app.POST("/products/results", controllers.SubmitProductResults)
 	app.GET("/products/results", controllers.GetProductResults)
+	app.GET("/products/results/:id", controllers.GetProductResult)
+
 
 	// app.POST("/products/tracked/add", controllers.AddTrackedProduct)
 	app.GET("/products/tracked/:id", controllers.GetTrackedProduct)

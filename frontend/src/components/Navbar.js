@@ -5,9 +5,6 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import Switch from "@mui/material/Switch";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -47,7 +44,7 @@ const ButtonLink = styled(Button)({
 
 export default function Navbar(props) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  // const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -67,9 +64,9 @@ export default function Navbar(props) {
   return (
     <ThemeProvider theme={theme}>
       {" "}
-      <AppBar position="static" className="mb-10" color={"primary"}>
+      <AppBar position="static" className="py-2" color={"primary"}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -77,9 +74,15 @@ export default function Navbar(props) {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
 
-          <Grid container sx={{ flexGrow: 1 }} gap={5}>
+          <Grid
+            container
+            sx={{ flexGrow: 1 }}
+            alignItems={"center"}
+            marginX={5}
+            gap={5}
+          >
             <Typography variant="h6" component="div">
               Price Tracker
             </Typography>
@@ -114,7 +117,10 @@ export default function Navbar(props) {
                 onClose={handleClose}
                 open={Boolean(anchorEl)}
               >
-                <MenuItem>Profile</MenuItem>
+                <MenuItem>
+                  {" "}
+                  <Link to={"/profile"}>Profile</Link>
+                </MenuItem>
                 <MenuItem>
                   <Link to={"/settings"}>Settings</Link>
                 </MenuItem>
@@ -124,7 +130,9 @@ export default function Navbar(props) {
           )}
         </Toolbar>
       </AppBar>
-      <Box mx={10}>{props.children}</Box>
+      <Grid container spacing={2} justifyContent={"center"}>
+        {props.children}
+      </Grid>
     </ThemeProvider>
   );
 }

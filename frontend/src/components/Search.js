@@ -2,6 +2,8 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth";
 import useProducts from "../hooks/Products";
+import { Form } from "react-router-dom";
+import { Grid } from "@mui/material";
 
 const AMAZON = "https://amazon.ca";
 
@@ -18,7 +20,7 @@ export default function SearchProduct(props) {
         search_text: product,
         url: AMAZON,
         endpoint: "/products/results",
-        user_id: userInfo.id || 1,
+        user_id: userInfo.id,
       });
 
       const res = await fetch(process.env.REACT_APP_START_SCRAPER_URL, {
@@ -40,14 +42,14 @@ export default function SearchProduct(props) {
   };
 
   return (
-    <>
+    <Grid>
       <label
         htmlFor="product"
         className="block text-sm font-medium leading-6 text-gray-900"
       >
         {props.title}
       </label>
-      <form
+      <Form
         className="grid grid-cols-12 gap-5 mt-2 rounded-md shadow-sm"
         onSubmit={formHandler}
       >
@@ -81,7 +83,7 @@ export default function SearchProduct(props) {
         <button className="flex justify-center items-center bg-blue-300 rounded-md">
           <MagnifyingGlassIcon className="h-6" />
         </button>
-      </form>
-    </>
+      </Form>
+    </Grid>
   );
 }
